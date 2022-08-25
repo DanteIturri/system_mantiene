@@ -12,9 +12,17 @@ class BranchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:view-brach | create-brach | edir-brach |deleted-brach', ['only' => ['index']]);
+        $this->middleware('permission:create-brach', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-brach', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:deleted-brach', ['only' => ['destroy']]);
+    }
     public function index()
     {
-        //
+        $brachs = Branch::paginate();
+        return view('branch.index', compact('brachs'));
     }
 
     /**
@@ -24,7 +32,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        return view('branch.create');
     }
 
     /**
@@ -35,7 +43,14 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'require',
+            'address' => 'require',
+            'complementary_data' => 'require',
+
+        ]);
+        Branch::create($request->all());
+        return redirect()->route('branch.index');
     }
 
     /**
@@ -57,7 +72,7 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        //
+        return view('branch.edit', compact('branch'));
     }
 
     /**
@@ -69,7 +84,13 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
-        //
+        request()->validate([
+            'name' => 'require',
+            'address' => 'require',
+            'complementary_data' => 'require',
+        ]);
+        $branch->update($request->all());
+        return redirect()->route('branch.index');
     }
 
     /**
@@ -80,6 +101,7 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+        return redirect()->route('branch.index');
     }
 }
