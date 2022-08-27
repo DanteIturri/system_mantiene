@@ -13,7 +13,7 @@
       <div class="content-header row">
         <div class="content-header-left col-12 mb-2 mt-4">
           <div class="breadcrumbs-top">
-            <h5 class="content-header-title float-left pr-1 mb-0">2 Columns</h5>
+            <h5 class="content-header-title float-left pr-1 mb-0">Lista de Clientes</h5>
             <div class="breadcrumb-wrapper d-none d-sm-block">
 
             </div>
@@ -27,7 +27,7 @@
         <!-- CSS Classes -->
         <section id="css-classes" class="card">
           <div class="card-header">
-            <h4 class="card-title">CSS Classes</h4>
+            <h4 class="card-title">Clientes</h4>
             <div class="float-right">
               <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
                 {{ __('Crear Nuevo') }}
@@ -68,16 +68,17 @@
                         <td>{{ $client->complementary_data }}</td>
                         <td>{{ $client->profile_photo_path }}</td>
 
-                        <td>
-                          <form action="{{ route('clients.destroy', $client->id) }}" method="POST">
-                            <a class="btn btn-sm btn-primary " href="{{ route('clients.show', $client->id) }}"><i
-                                class="fa fa-fw fa-eye"></i> Mostrar datos</a>
-                            <a class="btn btn-sm btn-success" href="{{ route('clients.edit', $client->id) }}"><i
-                                class="fa fa-fw fa-edit"></i> Editar</a>
+                        <td class="bx-fw">
+                          <form id="deleted" action="{{ route('clients.destroy', $client->id) }}" method="POST">
+                            <a class=" nav" href="{{ route('clients.show', $client->id) }}"><i
+                                class='bx bxs-show bx-sm'></i>
+                            </a>
+                            <a class="nav" href="{{ route('clients.edit', $client->id) }}"><i
+                                class=' bx bxs-edit-alt bx-sm'></i></a>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i>
-                              Borrar</button>
+                            <a onclick="this.closest('form').submit();return false;" class=" nav "><i
+                                class=' bx bxs-trash-alt bx-sm'></i></a>
                           </form>
                         </td>
                       </tr>
@@ -180,6 +181,10 @@
 
   <script>
     $('#data_clients').DataTable();
+
+    ducument.getElementById("deleted").addEventListener("click", function(e) {
+      event.preventDefault()
+    });
   </script>
 @endsection
 @endsection

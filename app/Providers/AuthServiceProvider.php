@@ -24,7 +24,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        // Add super admin role a user
+        Gate::before(function ($user, $ability) {
+            return $user->email == 'danteiturri@gmail.com' ?? null;
+        });
     }
 }

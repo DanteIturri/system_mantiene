@@ -32,7 +32,9 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('branch.create');
+        return view('branch.create', [
+            'branch' => new Branch
+        ]);
     }
 
     /**

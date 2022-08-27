@@ -34,9 +34,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $role = Role::pluck('name', 'name')->all();
-        $permission = Permission::get();
-        return view('user.create', compact('role', 'permission'));
+        $roles = Role::pluck('name', 'name')->all();
+        $permissions = Permission::get();
+        return view('user.create', [
+            'user' => new User
+        ], compact('roles', 'permissions'));
     }
 
     /**
@@ -92,7 +94,7 @@ class UserController extends Controller
         $userRole = $user->roles->pluck('name', 'name')->all();
         $userPermission = $user->permissions->pluck('name', 'name')->all();
 
-        return view('user.edit', compact('user', 'role', 'permission', 'userRole', 'userPermission'));
+        return view('user.edit', compact('user', 'roles', 'permissions', 'userRole', 'userPermission'));
     }
 
     /**
