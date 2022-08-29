@@ -36,7 +36,7 @@
               {{ method_field('PATCH') }}
               @csrf
 
-              @include('branches.form')
+              @include('branch.form')
 
             </form>
           </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -15,14 +16,15 @@ class BranchController extends Controller
     function __construct()
     {
         $this->middleware('permission:view-brach | create-brach | edir-brach |deleted-brach', ['only' => ['index']]);
+        $this->middleware('permission:view-brach ', ['only' => ['index']]);
         $this->middleware('permission:create-brach', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-brach', ['only' => ['edit', 'update']]);
         $this->middleware('permission:deleted-brach', ['only' => ['destroy']]);
     }
     public function index()
     {
-        $brachs = Branch::paginate();
-        return view('branch.index', compact('brachs'));
+        $branchs = Branch::paginate();
+        return view('branch.index', compact('branchs'));
     }
 
     /**
@@ -33,7 +35,8 @@ class BranchController extends Controller
     public function create()
     {
         return view('branch.create', [
-            'branch' => new Branch
+            'branch' => new Branch,
+            'user' => new User
         ]);
     }
 
@@ -45,14 +48,14 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'require',
-            'address' => 'require',
-            'complementary_data' => 'require',
+        // request()->validate([
+        //     'name' => 'required',
+        //     'address' => 'required',
+        //     'complementary_data' => 'required',
 
-        ]);
+        // ]);
         Branch::create($request->all());
-        return redirect()->route('branch.index');
+        return redirect()->route('branches.index');
     }
 
     /**
@@ -72,8 +75,9 @@ class BranchController extends Controller
      * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function edit(Branch $branch)
+    public function edit($id)
     {
+        $branch = Branch::find($id);
         return view('branch.edit', compact('branch'));
     }
 
@@ -86,13 +90,10 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
-        request()->validate([
-            'name' => 'require',
-            'address' => 'require',
-            'complementary_data' => 'require',
-        ]);
+
         $branch->update($request->all());
-        return redirect()->route('branch.index');
+
+        return redirect()->route('branches.index');
     }
 
     /**
@@ -104,6 +105,6 @@ class BranchController extends Controller
     public function destroy(Branch $branch)
     {
         $branch->delete();
-        return redirect()->route('branch.index');
+        return redirect()->route('branches.index');
     }
 }

@@ -3,7 +3,7 @@
 
     <div class=" mt-2">
       {{ Form::label('Rut') }}
-      {{ Form::text('rut', $user->rut, ['class' => 'form-control' . ($errors->has('rut') ? ' is-invalid' : ''), 'placeholder' => 'Rut']) }}
+      {{ Form::number('rut', $user->rut, ['class' => 'form-control' . ($errors->has('rut') ? ' is-invalid' : ''), 'placeholder' => 'Rut']) }}
       {!! $errors->first('rut', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class=" mt-2">
@@ -17,15 +17,20 @@
       {{ Form::text('email', $user->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
       {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
     </div>
+
     <div class=" mt-2">
-      {{ Form::label('Contraseña') }}
-      {{ Form::text('password', $user->password = '', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'Contraseña']) }}
-      {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" name="password" class="form-control @error('pas') is-invalid @enderror"
+          autocomplete="current-password" id="password" placeholder="Contraseña">
+      </div>
     </div>
     <div class=" mt-2">
-      {{ Form::label('confirmar Contraseña') }}
-      {{ Form::text('confirm-password', $user->password = '', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'placeholder' => 'Contraseña']) }}
-      {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control @error('password') is-invalid @enderror"
+          autocomplete="current-password" name="password_confirmation" id="password" placeholder="Contraseña">
+      </div>
     </div>
     <div class=" mt-2">
       {{ Form::label('Celular') }}
@@ -34,11 +39,11 @@
     </div>
     <div class=" mt-2">
       {{ Form::label('Rol') }}
-      {{ Form::select('roles[]', $roles, [], ['class' => 'form-control select2 ', 'multiple' => 'multiple']) }}
+      {{ Form::select('roles[]', $roles, $userRole, ['class' => 'form-control select2 ', 'multiple' => 'multiple']) }}
     </div>
     <div class=" mt-2">
       @foreach ($permissions as $value)
-        <label>{{ Form::checkbox('permissions[]', $value->id, false, ['class' => 'name']) }}
+        <label>{{ Form::checkbox('permission[]', $value->id, (in_array($value->id, $userPermissions) ? true : in_array($value->id, $rolePermissions)) ? true : false, ['class' => 'name']) }}
           {{ $value->name }}</label>
         <br />
       @endforeach

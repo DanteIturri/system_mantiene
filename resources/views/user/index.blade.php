@@ -64,11 +64,11 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->cel_phone }}</td>
                         <td>
-                            {{-- @if ()
-                                @foreach ( as )
-                                    
-                                @endforeach
-                            @endif --}}
+                          @if (!empty($user->getRoleNames()))
+                            @foreach ($user->getRoleNames() as $roleName)
+                              {{ $roleName }}
+                            @endforeach
+                          @endif
                         </td>
                         <td>{{ $user->profile_photo_path }}</td>
 

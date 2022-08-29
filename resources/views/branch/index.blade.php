@@ -53,19 +53,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($brachs as $brach)
+                    @foreach ($branchs as $branch)
                       <tr>
-                        <td>{{ $brach->id }}</td>
+                        <td>{{ $branch->id }}</td>
 
-                        <td>{{ $brach->name }}</td>
-                        <td>{{ $brach->address }}</td>
-                        <td>{{ $brach->complementary_data }}</td>
+                        <td>{{ $branch->name }}</td>
+                        <td>{{ $branch->address }}</td>
+                        <td>{{ $branch->complementary_data }}</td>
 
                         <td>
-                          <form action="{{ route('braches.destroy', $brach->id) }}" method="POST">
-                            <a class="btn btn-sm btn-primary " href="{{ route('braches.show', $brach->id) }}"><i
+                          <form action="{{ route('branches.destroy', $branch->id) }}" method="POST">
+                            <a class="btn btn-sm btn-primary " href="{{ route('branches.show', $branch->id) }}"><i
                                 class="fa fa-fw fa-eye"></i> Mostrar datos</a>
-                            <a class="btn btn-sm btn-success" href="{{ route('braches.edit', $brach->id) }}"><i
+                            <a class="btn btn-sm btn-success" href="{{ route('branches.edit', $branch->id) }}"><i
                                 class="fa fa-fw fa-edit"></i> Editar</a>
                             @csrf
                             @method('DELETE')

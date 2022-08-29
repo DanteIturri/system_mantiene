@@ -1,4 +1,4 @@
-{{-- @extends('auth.layout.authlayout')
+@extends('auth.layout.authlayout')
 <!-- login page start -->
 @section('content')
   <section id="auth-login" class="row flexbox-container">
@@ -72,10 +72,10 @@
     </div>
   </section>
   <!-- login page ends -->
-@endsection --}}
+@endsection
 
 
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
   <div class="container">
@@ -150,4 +150,4 @@
       </div>
     </div>
   </div>
-@endsection
+@endsection --}}

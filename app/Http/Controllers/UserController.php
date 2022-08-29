@@ -34,11 +34,14 @@ class UserController extends Controller
      */
     public function create()
     {
+        $userRole = '';
+        $rolePermissions = [];
+        $userPermissions = [];
         $roles = Role::pluck('name', 'name')->all();
         $permissions = Permission::get();
         return view('user.create', [
             'user' => new User
-        ], compact('roles', 'permissions'));
+        ], compact('roles', 'permissions', 'userRole', 'userPermissions', 'rolePermissions'));
     }
 
     /**
@@ -49,13 +52,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'require',
-            'email' => 'require|email|unique:users,email',
-            'password' => 'require|same:confirm-password',
-            'role' => 'require'
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users,email',
+        //     'password' => 'required|same:confirm-password',
+        //     'role' => 'required'
 
-        ]);
+        // ]);
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
@@ -65,7 +68,7 @@ class UserController extends Controller
         // add permissions allowing
         $user->syncPermissions($request->input('permissions'));
 
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -92,9 +95,14 @@ class UserController extends Controller
         $permissions = Permission::get();
         // obtengo permissions and role the user
         $userRole = $user->roles->pluck('name', 'name')->all();
-        $userPermission = $user->permissions->pluck('name', 'name')->all();
-
-        return view('user.edit', compact('user', 'roles', 'permissions', 'userRole', 'userPermission'));
+        $userPermissions = DB::table('model_has_permissions')->where('model_has_permissions.model_id', $id)
+            ->pluck('model_has_permissions.permission_id', 'model_has_permissions.permission_id')
+            ->all();
+        $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+        \Log::debug($userPermissions);
+        return view('user.edit', compact('user', 'roles', 'permissions', 'userRole', 'userPermissions', 'rolePermissions'));
     }
 
     /**
@@ -106,13 +114,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'require',
-            'email' => 'require|email|unique:users,email' . $id,
-            'password' => 'same:confirm-password',
-            'role' => 'require'
-        ]);
-
+        \Log::debug($request);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users,email,' . $id,
+        //     'password' => 'same:confirm-password',
+        //     'role' => 'required'
+        // ]);
+        \Log::debug($request);
         $input = $request->all();
 
         if (!empty($input['password'])) {
@@ -121,16 +130,16 @@ class UserController extends Controller
             $input = SupportArr::except($input, array('password'));
         }
         $user = User::find($id);
-        $user->update('input');
+        $user->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         DB::table('model_has_permissions')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
 
         // add permissions allowing
-        $user->syncPermissions($request->input('permissions'));
+        $user->syncPermissions($request->input('permission'));
 
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -142,6 +151,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 }
