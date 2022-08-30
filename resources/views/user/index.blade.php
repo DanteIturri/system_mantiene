@@ -13,7 +13,7 @@
       <div class="content-header row">
         <div class="content-header-left col-12 mb-2 mt-4">
           <div class="breadcrumbs-top">
-            <h5 class="content-header-title float-left pr-1 mb-0">Lista de Ususrios</h5>
+            <h5 class="content-header-title float-left pr-1 mb-0">Lista de Usuarios</h5>
             <div class="breadcrumb-wrapper d-none d-sm-block">
 
             </div>

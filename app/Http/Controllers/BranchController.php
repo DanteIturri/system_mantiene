@@ -48,12 +48,14 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
+        /* Validating the request. */
         // request()->validate([
         //     'name' => 'required',
         //     'address' => 'required',
         //     'complementary_data' => 'required',
 
         // ]);
+        /* Creating a new branch with the data from the request. */
         Branch::create($request->all());
         return redirect()->route('branches.index');
     }
@@ -77,6 +79,7 @@ class BranchController extends Controller
      */
     public function edit($id)
     {
+        /* Finding the branch with the id of . */
         $branch = Branch::find($id);
         return view('branch.edit', compact('branch'));
     }
