@@ -18,14 +18,16 @@
 
           <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
               href="javascript:void(0);" data-toggle="dropdown">
-              <div class="user-nav d-sm-flex d-none"><span class="user-name">John Doe</span><span
-                  class="user-status">Available</span></div><span><img class="round"
+              <div class="user-nav d-sm-flex d-none"><span class="user-name">{{auth()->user()->name}}</span><span
+                  class="user-status">@if (session())
+                  Conectado
+                  @endif</span></div><span><img class="round"
                   src="{{ asset('./app-assets/images/portrait/small/avatar-s-11.jpg') }}" alt="avatar" height="40"
                   width="40"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="javascript:void(0);">
-                <i class="bx bx-user mr-50"></i> Edit Profile</a>
+                <i class="bx bx-user mr-50"></i>Editar Perfil</a>
 
               <div class="dropdown-divider"></div>
               <form action="/logout" method="POST">
@@ -33,7 +35,7 @@
 
                 <button class="dropdown-item">
                   <i class="bx bx-power-off mr-50"></i>
-                  Logout</button>
+                  Salir</button>
               </form>
             </div>
           </li>

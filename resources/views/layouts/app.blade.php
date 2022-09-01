@@ -23,7 +23,7 @@
   <meta name="keywords"
     content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="PIXINVENT">
-  <title>2 Columns - Frest - Bootstrap HTML admin template</title>
+  <title>Mantiene</title>
   <link rel="apple-touch-icon" href="{{ asset('./app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/app-assets/images/ico/favicon.ico') }}">
   <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700"
@@ -42,11 +42,12 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/components.css ') }}">
   <!-- BEGIN: Page CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/plugins/forms/wizard.css') }}">
   <!-- END: Page CSS-->
 
   <!-- BEGIN: Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('./assets/css/style.css') }}">
+  
   <!-- END: Custom CSS-->
   @yield('css')
 </head>
@@ -86,7 +87,7 @@
   <script src="{{ asset('/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js') }}"></script>
   <script src="{{ asset('/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js') }}"></script>
   <script src="{{ asset('/app-assets/vendors/js/forms/select/select2.full.min.js') }}""></script>
-  <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
+  <script src="{{ asset('/app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
   <!-- BEGIN Vendor JS-->
 
   <!-- BEGIN: Page Vendor JS-->
@@ -102,6 +103,7 @@
   <!-- END: Theme JS-->
 
   <!-- BEGIN: Page JS-->
+  <script src="{{ asset('/app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
   <!-- END: Page JS-->
   @yield('js')
 </body>

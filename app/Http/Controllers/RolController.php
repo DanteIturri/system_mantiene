@@ -102,13 +102,14 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
+        \Log::debug($request);
         // $this->validate($request, [
         //     'name' => 'required',
         //     'permission' => 'required',
         // ]);
         $role = Role::find($id);
         $role->name = $request->input('name');
-
+        $role->update($request->all());
         $role->syncPermissions($request->input('permission'));
         return redirect()->route('roles.index');
     }

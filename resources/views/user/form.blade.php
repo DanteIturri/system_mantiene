@@ -1,62 +1,84 @@
-<div class="box box-info padding-1">
-  <div class="box-body">
+<div class="form-body mt-1">
+    <div class="row">
+        <div class="col-md-6  col-12">
+            <div class="form-label-group">
+                <div class="position-relative has-icon-left">
+                    {{ Form::select('roles[]', $roles, $userRole, ['class' => 'form-control ']) }}
+                    <div class="form-control-position">
+                        <i class='bx bx-id-card'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-label-group">
+                <div class="position-relative has-icon-left">
+                    <input type="text" name="rut" id="fname-icon" class="form-control" name="fname-icon"
+                        placeholder="Rut" value="{{ old( 'rut' , $user->rut) }}">
+                    <div class="form-control-position">
+                        <i class='bx bx-id-card'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class=" mt-2">
-      {{ Form::label('Rut') }}
-      {{ Form::number('rut', $user->rut, ['class' => 'form-control' . ($errors->has('rut') ? ' is-invalid' : ''), 'placeholder' => 'Rut']) }}
-      {!! $errors->first('rut', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
-    <div class=" mt-2">
-      {{ Form::label('Nombre') }}
-      {{ Form::text('name', $user->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
-      {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
 
-    <div class=" mt-2">
-      {{ Form::label('email') }}
-      {{ Form::text('email', $user->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
-      {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
+        <div class="col-md-6 col-12">
+            <div class="form-label-group">
+                <div class="position-relative has-icon-left">
+                    <input type="text" name="name" id="fname-icon" class="form-control" name="fname-icon"
+                        placeholder="Nombre" value="{{ old( 'name' , $user->name) }}">
+                    <div class="form-control-position">
+                        <i class="bx bx-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-label-group">
+                <div class="position-relative has-icon-left">
+                    <input type="text" name="email" id="fname-icon" class="form-control" name="fname-icon"
+                        placeholder="Email" value="{{ old( 'email' , $user->email) }}">
+                    <div class="form-control-position">
+                        <i class='bx bx-envelope'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6  col-12">
+            <div class="form-label-group">
+                <div class="position-relative has-icon-left">
+                    <input type="text" name="cel_phone" id="fname-icon" class="form-control" name="fname-icon"
+                        placeholder="Telefono" value="{{ old( 'cel_phone' , $user->cel_phone) }}">
+                    <div class="form-control-position">
+                        <i class='bx bx-mobile-alt'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class=" mt-2">
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" class="form-control @error('pas') is-invalid @enderror"
-          autocomplete="current-password" id="password" placeholder="Contraseña">
-      </div>
-    </div>
-    <div class=" mt-2">
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" class="form-control @error('password') is-invalid @enderror"
-          autocomplete="current-password" name="password_confirmation" id="password" placeholder="Contraseña">
-      </div>
-    </div>
-    <div class=" mt-2">
-      {{ Form::label('Celular') }}
-      {{ Form::text('cel_phone', $user->cel_phone, ['class' => 'form-control' . ($errors->has('cel_phone') ? ' is-invalid' : ''), 'placeholder' => 'Celular']) }}
-      {!! $errors->first('cel_phone', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
-    <div class=" mt-2">
-      {{ Form::label('Rol') }}
-      {{ Form::select('roles[]', $roles, $userRole, ['class' => 'form-control select2 ', 'multiple' => 'multiple']) }}
-    </div>
-    <div class=" mt-2">
-      @foreach ($permissions as $value)
-        <label>{{ Form::checkbox('permission[]', $value->id, (in_array($value->id, $userPermissions) ? true : in_array($value->id, $rolePermissions)) ? true : false, ['class' => 'name']) }}
-          {{ $value->name }}</label>
-        <br />
-      @endforeach
-    </div>
 
-    <div class=" mt-2">
-      {{ Form::label('Imagen') }}
-      {{ Form::text('profile_photo_path', $user->profile_photo_path, ['class' => 'form-control' . ($errors->has('profile_photo_path') ? ' is-invalid' : ''), 'placeholder' => 'Imagen']) }}
-      {!! $errors->first('profile_photo_path', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
+        <div class="col-md-12 col-12">
+            <p class=" pl-2 h5 text-muted"><i class='bx bx-list-plus bx-sm'></i> Permisos</p>
 
-  </div>
-  <div class="box-footer pt mt-3">
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </div>
+            <div class="form-label-group mt-1">
+                @foreach ($permissions as $value)
+                {{ Form::checkbox('permission[]', $value->id, (in_array($value->id, $userPermissions) ? true :
+                in_array($value->id, $rolePermissions)) ? true : false, ['class' => 'name ml-1']) }}
+                <span class="">{{ $value->name }}</span>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="col-md-12 col-12 mt-0">
+
+        </div>
+
+
+
+        <div class="col-12 d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary mr-1 ">Guardar</button>
+
+        </div>
+    </div>
 </div>
